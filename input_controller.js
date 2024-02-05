@@ -153,6 +153,62 @@ class InputController {
             document.getElementById(touch_element_id).addEventListener( 'touchend', function(e){e.preventDefault();}, false );
             document.getElementById(touch_element_id).addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
 
+            if (touch_element_id)
+        {
+            // document.getElementById(touch_element_id).addEventListener( 'touchstart', this.touchStart.bind(this), false );
+            // document.getElementById(touch_element_id).addEventListener( 'touchend', this.touchEnd.bind(this), false );
+            // document.getElementById(touch_element_id).addEventListener( 'touchmove', this.touchMove.bind(this), false );
+
+            this.manager = nipplejs.create({
+                zone: document.getElementById(touch_element_id2),
+                color: 'darkgray',
+                mode: "dynamic",
+            });
+
+            this.manager.on("move", (evt, data) => {
+
+                if (window["myApp"].this.Key_Action_C) {
+                    this.VectorX = 0
+                    this.VectorY = 0;
+                    if (data.force > 1) {
+                        if (data.direction)
+                            this.nippleDirection = data.direction.angle;
+
+                        if (this.nippleDirection == 'left') this.Key_Action_CLEFT = true;
+                        if (this.nippleDirection == 'right') this.Key_Action_CRIGHT = true;
+                        if (this.nippleDirection == 'up') this.Key_Action_CUP = true;
+                        if (this.nippleDirection == 'down') this.Key_Action_CDOWN = true;
+                    }
+                    else {
+                        this.nippleDirection = 'none';
+                        this.Key_Action_CLEFT = false;
+                        this.Key_Action_CRIGHT = false;
+                        this.Key_Action_CUP = false;
+                        this.Key_Action_CDOWN = false;
+                    }
+                }
+                else
+                {
+                    this.VectorX = data.vector.x;
+                    this.VectorY = data.vector.y;
+                }
+            })
+    
+            this.manager.on("end", (evt, data) => {
+                this.nippleDirection = 'none';
+                this.Key_Left = false;
+                this.Key_Right = false;
+                this.Key_Up = false;
+                this.Key_Down = false;
+                this.VectorX = 0;
+                this.VectorY = 0;
+            })
+
+            document.getElementById(touch_element_id2).addEventListener( 'touchstart', function(e){e.preventDefault();}, false );
+            document.getElementById(touch_element_id2).addEventListener( 'touchend', function(e){e.preventDefault();}, false );
+            document.getElementById(touch_element_id2).addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
+
+
             document.getElementById('mobileA').addEventListener( 'touchstart', this.mobilePressA.bind(this), false );
             document.getElementById('mobileB').addEventListener( 'touchstart', this.mobilePressB.bind(this), false );
             document.getElementById('mobileStart').addEventListener( 'touchstart', this.mobilePressStart.bind(this), false );
