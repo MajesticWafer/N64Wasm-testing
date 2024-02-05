@@ -300,6 +300,10 @@ class InputController {
             {
                 input_controller.touchX_Start = touch.clientX;
                 input_controller.touchY_Start = touch.clientY;
+            } else if (touch.target["id"]=="divTouchSurface2" || touch.target["id"]=="startDiv2")
+            {
+                input_controller.touchX_Start = touch.clientX;
+                input_controller.touchY_Start = touch.clientY;
             }
         }
     }
