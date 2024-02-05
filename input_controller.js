@@ -19,6 +19,7 @@ class KeyMappings {
         this.Mapping_Up = null;
         this.Mapping_Down = null;
         this.Mapping_Action_Start = null;
+        this.Mapping_Action_C = null;
         this.Mapping_Action_CUP = null;
         this.Mapping_Action_CDOWN = null;
         this.Mapping_Action_CLEFT = null;
@@ -44,6 +45,7 @@ class KeyMappings {
         this.Joy_Mapping_Action_B = null;
         this.Joy_Mapping_Action_A = null;
         this.Joy_Mapping_Menu = null;
+        this.Joy_Mapping_Action_C = null;
         this.Joy_Mapping_Action_CLEFT = null;
         this.Joy_Mapping_Action_CRIGHT = null;
         this.Joy_Mapping_Action_CUP = null;
@@ -69,6 +71,7 @@ class InputController {
         this.Key_Left = false;
         this.Key_Right = false;
         this.Key_Action_Start = false;
+        this.Key_Action_C = false;
         this.Key_Action_CUP = false;
         this.Key_Action_CDOWN = false;
         this.Key_Action_CLEFT = false;
@@ -153,7 +156,27 @@ class InputController {
             document.getElementById(touch_element_id).addEventListener( 'touchend', function(e){e.preventDefault();}, false );
             document.getElementById(touch_element_id).addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
 
-            if (touch_element_id)
+            document.getElementById('mobileA').addEventListener( 'touchstart', this.mobilePressA.bind(this), false );
+            document.getElementById('mobileB').addEventListener( 'touchstart', this.mobilePressB.bind(this), false );
+            document.getElementById('mobileStart').addEventListener( 'touchstart', this.mobilePressStart.bind(this), false );
+            document.getElementById('mobileSelect').addEventListener( 'touchstart', this.mobilePressSelect.bind(this), false );
+            document.getElementById('mobileA').addEventListener( 'touchend', this.mobileReleaseA.bind(this), false );
+            document.getElementById('mobileB').addEventListener( 'touchend', this.mobileReleaseB.bind(this), false );
+            document.getElementById('mobileStart').addEventListener( 'touchend', this.mobileReleaseStart.bind(this), false );
+            document.getElementById('mobileSelect').addEventListener( 'touchend', this.mobileReleaseSelect.bind(this), false );
+            document.getElementById('mobileA').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
+            document.getElementById('mobileB').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
+            document.getElementById('mobileStart').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
+            document.getElementById('mobileSelect').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
+
+            //to hide and show loading panel
+            document.getElementById('menuDiv').addEventListener( 'touchstart', this.menuTouch.bind(this), false );
+
+        }
+    }
+    setupMobileControls(touch_element_id2)
+    {
+        if (touch_element_id2)
         {
             // document.getElementById(touch_element_id).addEventListener( 'touchstart', this.touchStart.bind(this), false );
             // document.getElementById(touch_element_id).addEventListener( 'touchend', this.touchEnd.bind(this), false );
@@ -167,7 +190,7 @@ class InputController {
 
             this.manager.on("move", (evt, data) => {
 
-                if (window["myApp"].this.Key_Action_C) {
+                if (window["myApp"].rivetsData.useZasCMobile == 'false' && this.Key_Action_Z) {
                     this.VectorX = 0
                     this.VectorY = 0;
                     if (data.force > 1) {
@@ -204,29 +227,13 @@ class InputController {
                 this.VectorY = 0;
             })
 
+            //needed in conjuction with nippleJS otherwise iOS text selection will activate
             document.getElementById(touch_element_id2).addEventListener( 'touchstart', function(e){e.preventDefault();}, false );
             document.getElementById(touch_element_id2).addEventListener( 'touchend', function(e){e.preventDefault();}, false );
             document.getElementById(touch_element_id2).addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
-
-
-            document.getElementById('mobileA').addEventListener( 'touchstart', this.mobilePressA.bind(this), false );
-            document.getElementById('mobileB').addEventListener( 'touchstart', this.mobilePressB.bind(this), false );
-            document.getElementById('mobileStart').addEventListener( 'touchstart', this.mobilePressStart.bind(this), false );
-            document.getElementById('mobileSelect').addEventListener( 'touchstart', this.mobilePressSelect.bind(this), false );
-            document.getElementById('mobileA').addEventListener( 'touchend', this.mobileReleaseA.bind(this), false );
-            document.getElementById('mobileB').addEventListener( 'touchend', this.mobileReleaseB.bind(this), false );
-            document.getElementById('mobileStart').addEventListener( 'touchend', this.mobileReleaseStart.bind(this), false );
-            document.getElementById('mobileSelect').addEventListener( 'touchend', this.mobileReleaseSelect.bind(this), false );
-            document.getElementById('mobileA').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
-            document.getElementById('mobileB').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
-            document.getElementById('mobileStart').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
-            document.getElementById('mobileSelect').addEventListener( 'touchmove', function(e){e.preventDefault();}, false );
-
-            //to hide and show loading panel
-            document.getElementById('menuDiv').addEventListener( 'touchstart', this.menuTouch.bind(this), false );
-
         }
     }
+    
 
     menuTouch(event){
         $("#mobileButtons").show();
